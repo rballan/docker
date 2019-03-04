@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  jeedom:
+    image: jeedom/jeedom:stable
+    ports:
+      - 8080:80
+    volumes:
+      - ./conf/php.ini:/etc/php/7.0/apache2/php.ini
+      - /tmp/jeedom/var/www/html:/var/www/html
+    links:
+      - mysql:mysql
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysqlrootpassword
+      - MYSQL_DATABASE=jeedom
+      - MYSQL_USER=jeedom
+      - MYSQL_PASSWORD=jeedom
+    volumes:
+      - /tmp/jeedom/mysqldata:/var/lib/mysql
+    # ports:
+    #   - 3306:3306
